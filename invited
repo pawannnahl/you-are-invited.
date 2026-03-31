@@ -22,7 +22,62 @@
       overflow-x: hidden;
     }
 
-    /* Main Container - Mobile First */
+    /* Music Player Button */
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,215,140,0.5);
+    }
+
+    .music-player:hover {
+      transform: scale(1.05);
+    }
+
+    .music-player:active {
+      transform: scale(0.95);
+    }
+
+    .music-player i {
+      font-size: 24px;
+      color: #ffd966;
+    }
+
+    .music-player.playing i {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); text-shadow: 0 0 10px #ffd966; }
+    }
+
+    /* Mobile Optimization */
+    @media (max-width: 480px) {
+      .music-player {
+        bottom: 15px;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+      }
+      .music-player i {
+        font-size: 20px;
+      }
+    }
+
+    /* Rest of your existing styles */
     .invitation {
       max-width: 100%;
       margin: 0 auto;
@@ -30,7 +85,6 @@
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
     }
 
-    /* Hero Section - Mobile Optimized */
     .hero {
       position: relative;
       background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.4)), 
@@ -46,7 +100,6 @@
       padding: 1rem;
     }
 
-    /* Decorative Border - Mobile Adjusted */
     .hero-border {
       position: absolute;
       top: 15px;
@@ -83,7 +136,6 @@
       line-height: 1.2;
       text-transform: uppercase;
       text-shadow: 2px 2px 12px rgba(0,0,0,0.6);
-      word-break: keep-all;
     }
 
     .couple-name span {
@@ -117,7 +169,6 @@
       font-weight: 300;
     }
 
-    /* Section Styles - Mobile */
     .section {
       padding: 2.5rem 1rem;
       border-bottom: 1px solid #eee4d8;
@@ -146,7 +197,6 @@
       margin: 10px auto 0;
     }
 
-    /* Events Grid - Mobile Optimized (Single Column) */
     .events-grid {
       display: flex;
       flex-direction: column;
@@ -164,7 +214,6 @@
 
     .event-card:active {
       transform: scale(0.98);
-      background: #fefaf5;
     }
 
     .event-icon {
@@ -208,7 +257,6 @@
       font-weight: 500;
       color: #8b5a2e;
       transition: 0.2s;
-      -webkit-tap-highlight-color: transparent;
     }
 
     .route-btn:active {
@@ -216,7 +264,6 @@
       transform: scale(0.96);
     }
 
-    /* Highlight Cards - Mobile */
     .highlight-card {
       background: linear-gradient(135deg, #fffaf2, #fff5ea);
       border-radius: 20px;
@@ -250,7 +297,6 @@
       margin-top: 0.8rem;
       transition: 0.2s;
       font-size: 0.8rem;
-      -webkit-tap-highlight-color: transparent;
     }
 
     .btn-gold:active {
@@ -258,7 +304,6 @@
       transform: scale(0.96);
     }
 
-    /* Couple Section - Mobile */
     .couple-grid {
       display: flex;
       flex-direction: column;
@@ -283,7 +328,6 @@
       font-size: 0.85rem;
     }
 
-    /* Info Grid - Mobile */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -312,7 +356,6 @@
       font-size: 0.7rem;
     }
 
-    /* Message Card - Mobile */
     .message-card {
       background: #fefaf4;
       padding: 1.5rem;
@@ -324,7 +367,6 @@
       color: #4a3520;
     }
 
-    /* Countdown - Mobile */
     .countdown-box {
       background: #2a241c;
       color: #fff5e6;
@@ -368,7 +410,6 @@
       font-size: 0.8rem;
     }
 
-    /* Footer - Mobile */
     .footer {
       background: #f2e8dc;
       text-align: center;
@@ -377,7 +418,6 @@
       color: #7a562e;
     }
 
-    /* Mobile Specific Optimizations */
     @media (max-width: 480px) {
       .couple-name {
         font-size: 2rem;
@@ -400,12 +440,6 @@
       }
     }
 
-    /* Touch Friendly - Larger Tap Areas */
-    .route-btn, .btn-gold, .event-card {
-      cursor: pointer;
-    }
-
-    /* Smooth Scrolling */
     html {
       scroll-behavior: smooth;
     }
@@ -416,7 +450,18 @@
 <body>
 
 <div class="invitation">
-  <!-- HERO SECTION -->
+  <!-- Music Player Button -->
+  <div class="music-player" id="musicBtn" onclick="toggleMusic()">
+    <i class="fas fa-music" id="musicIcon"></i>
+  </div>
+
+  <!-- Audio Element - Romantic Wedding Song -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <!-- Fallback: YouTube embed if needed -->
+  </audio>
+
+  <!-- Hero Section -->
   <div class="hero">
     <div class="hero-border"></div>
     <div class="hero-content">
@@ -442,7 +487,7 @@
     </div>
   </div>
 
-  <!-- EVENTS SECTION -->
+  <!-- Events Section -->
   <div class="section">
     <div class="container">
       <div class="section-title">✨ Wedding Events ✨</div>
@@ -523,7 +568,7 @@
     </div>
   </div>
 
-  <!-- HIGHLIGHT CARDS -->
+  <!-- Highlight Cards -->
   <div class="container" style="padding: 0 1rem;">
     <div class="highlight-card">
       <i class="fas fa-arrow-right" style="color: #b5692e;"></i>
@@ -542,7 +587,7 @@
     </div>
   </div>
 
-  <!-- MEET THE COUPLE -->
+  <!-- Meet the Couple -->
   <div class="section">
     <div class="container">
       <div class="section-title">💑 Meet the Couple 💑</div>
@@ -563,7 +608,7 @@
     </div>
   </div>
 
-  <!-- MESSAGE -->
+  <!-- Message -->
   <div class="container" style="padding: 0 1rem 1rem 1rem;">
     <div class="message-card">
       <i class="fas fa-quote-left" style="color: #c28a5c; opacity: 0.5;"></i>
@@ -573,7 +618,7 @@
     </div>
   </div>
 
-  <!-- THINGS TO KNOW -->
+  <!-- Things to Know -->
   <div class="section">
     <div class="container">
       <div class="section-title">📌 Things to Know</div>
@@ -610,7 +655,7 @@
     </div>
   </div>
 
-  <!-- COUNTDOWN -->
+  <!-- Countdown -->
   <div class="container" style="padding: 0 1rem 2rem 1rem;">
     <div class="countdown-box">
       <h2>✨ The Countdown Begins ✨</h2>
@@ -632,6 +677,54 @@
 </div>
 
 <script>
+  // Music Control
+  let isPlaying = false;
+  const audio = document.getElementById('bgMusic');
+  const musicBtn = document.getElementById('musicBtn');
+  const musicIcon = document.getElementById('musicIcon');
+
+  // Auto-play attempt (user interaction required for mobile)
+  function tryAutoPlay() {
+    audio.play().then(() => {
+      isPlaying = true;
+      musicIcon.className = 'fas fa-volume-up';
+      musicBtn.classList.add('playing');
+    }).catch(() => {
+      console.log("Auto-play blocked. User must tap music button.");
+      isPlaying = false;
+      musicIcon.className = 'fas fa-music';
+      musicBtn.classList.remove('playing');
+    });
+  }
+
+  function toggleMusic() {
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      musicIcon.className = 'fas fa-music';
+      musicBtn.classList.remove('playing');
+    } else {
+      audio.play().then(() => {
+        isPlaying = true;
+        musicIcon.className = 'fas fa-volume-up';
+        musicBtn.classList.add('playing');
+      }).catch((e) => {
+        console.log("Playback failed:", e);
+        alert("Please tap again to play music. Your browser may require user interaction first.");
+      });
+    }
+  }
+
+  // Try to auto-play on load (will work after any user click)
+  document.body.addEventListener('touchstart', function initAudio() {
+    tryAutoPlay();
+    document.body.removeEventListener('touchstart', initAudio);
+  });
+  document.body.addEventListener('click', function initAudioClick() {
+    tryAutoPlay();
+    document.body.removeEventListener('click', initAudioClick);
+  });
+
   // Countdown Timer
   function updateCountdown() {
     const target = new Date(2026, 3, 20, 0, 0, 0);
